@@ -20,7 +20,7 @@ const headerStyles = css`
   font-size: calc(10px + 2vmin);
   color: white;
   text-transform: uppercase;
-  font-family: Simplifica;
+  font-family: 'Simplifica';
 `;
 
 const imgStyles = css`
@@ -126,7 +126,7 @@ function App() {
   // Define input fields
   const [fname, setfName] = useState('');
   const [lname, setlName] = useState('');
-  const [attending, setAttending] = useState(false);
+  // const [attending, setAttending] = useState(false);
 
   // when Submit button is clicked:
   function handleSubmit(e) {
@@ -165,7 +165,7 @@ function App() {
       const response = await fetch(`${baseUrl}/${checkboxKeys}`, {
         method: 'DELETE',
       });
-      // eslint-disable-next-line no-unused-vars
+      // eslint-disable-next-line
       const deletedGuest = await response.json();
 
       window.location.reload(false);
@@ -185,7 +185,7 @@ function App() {
           attending: true,
         }),
       });
-      // eslint-disable-next-line no-unused-vars
+      // eslint-disable-next-line
       const updatedGuest = await response.json();
 
       window.location.reload(false);
