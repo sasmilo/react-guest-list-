@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import React, { useEffect, useState } from 'react';
 
-const baseUrl = 'http://localhost:5000';
+const baseUrl = 'https://express-rest-guest-list-api.herokuapp.com/';
 
 const gray = '#282c34';
 const teal = '#32a895';
