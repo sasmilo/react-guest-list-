@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import React, { useEffect, useState } from 'react';
 
-const baseUrl = 'https://express-rest-guest-list-api.herokuapp.com/';
+const baseUrl = 'https://express-rest-guest-list-api.herokuapp.com';
 
 const gray = '#282c34';
 const teal = '#32a895';
@@ -124,8 +124,8 @@ function App() {
   console.log(list);
 
   // Define input fields
-  const [fname, setfName] = useState('');
-  const [lname, setlName] = useState('');
+  const [fName, setfName] = useState('');
+  const [lName, setlName] = useState('');
   // const [attending, setAttending] = useState(false);
 
   // when Submit button is clicked:
@@ -140,8 +140,8 @@ function App() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          firstName: fname,
-          lastName: lname,
+          firstName: fName,
+          lastName: lName,
         }),
       });
       // eslint-disable-next-line
