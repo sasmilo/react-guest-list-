@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const baseUrl = 'https://express-rest-guest-list-api.herokuapp.com';
 
@@ -44,6 +44,8 @@ const bodyStyles = css`
 
 const inputField = css`
   line-height: 40px;
+  width: 100%;
+  margin-bottom: 20px;
 `;
 
 const addGuestStyles = css`
@@ -59,6 +61,7 @@ const buttonStyles = css`
   text-decoration: none;
   letter-spacing: 1px;
   font-size: 20px;
+  margin-bottom: 20px;
   padding: 20px 50px;
   border: none;
   border-radius: 15px;
@@ -83,6 +86,7 @@ const buttonDeleteStyles = css`
   text-decoration: none;
   letter-spacing: 1px;
   font-size: 20px;
+  margin-bottom: 20px;
   padding: 20px 50px;
   display: inline-block;
   border: none;
@@ -121,12 +125,14 @@ function App() {
 
     getList();
   }, []);
-  console.log(list);
+  // console.log(list);
 
   // Define input fields
-  const [fName, setfName] = useState('');
-  const [lName, setlName] = useState('');
-  // const [attending, setAttending] = useState(false);
+  const [fName, setFname] = useState('');
+  const [lName, setLname] = useState('');
+  const [checkboxes, setCheckboxes] = useState({});
+  // Object.keys() returns an array of strings which are values of specific key of the object
+  const checkboxKeys = Object.keys(checkboxes);
 
   // when Submit button is clicked:
   function handleSubmit(e) {
@@ -144,20 +150,14 @@ function App() {
           lastName: lName,
         }),
       });
-      // eslint-disable-next-line
-      const createdGuest = await response.json();
 
-      window.location.reload(false);
+      const createdGuest = await response.json();
+      window.location.reload();
+      return createdGuest;
     }
 
     newGuest();
   }
-
-  // set state for checkbox
-  const [checkboxes, setCheckboxes] = useState({});
-
-  // Object.keys () returns an array of strings which are values of specific key of the object
-  const checkboxKeys = Object.keys(checkboxes);
 
   // when Delete button is clicked:
   function handleDelete() {
@@ -165,10 +165,11 @@ function App() {
       const response = await fetch(`${baseUrl}/${checkboxKeys}`, {
         method: 'DELETE',
       });
-      // eslint-disable-next-line
+
       const deletedGuest = await response.json();
 
-      window.location.reload(false);
+      window.location.reload();
+      return deletedGuest;
     }
     deleteGuest();
   }
@@ -185,10 +186,11 @@ function App() {
           attending: true,
         }),
       });
-      // eslint-disable-next-line
+
       const updatedGuest = await response.json();
 
-      window.location.reload(false);
+      window.location.reload();
+      return updatedGuest;
     }
     editGuest();
   }
@@ -196,11 +198,7 @@ function App() {
   return (
     <div className="App">
       <header css={headerStyles} className="App-header">
-        <img
-          css={imgStyles}
-          src="https://www.total-slovenia-news.com/media/k2/items/cache/8cbd4f94d3c900dd9bc2d39949a9e6a6_XL.jpg"
-          alt="Group TNT"
-        />
+        <img css={imgStyles} src="/group-tnt.jpg" alt="Group TNT" />
         <h1>Group TNT guest List</h1>
       </header>
       <section css={bodyStyles} className="App-body">
@@ -208,30 +206,25 @@ function App() {
           <h2>Add the guest to the list:</h2>
           {/* Personal data input fields */}
           <form onSubmit={handleSubmit}>
-            {/* <label> */}
-            <span>First name: </span>
-            {/* </label> */}
             <input
               css={inputField}
               type="text"
+              placeholder="First name"
               id="firstName"
-              onChange={(e) => setfName(e.target.value)}
-            />
-            <br />
-            <br />
-            {/* <label>Last name: </label> */}
-            <span>Last name: </span>
-            <input
-              css={inputField}
-              type="text"
-              id="lastName"
-              onChange={(e) => setlName(e.target.value)}
+              onChange={(e) => setFname(e.target.value)}
             />
             <br />
 
-            <p>
-              <button css={buttonStyles}>Submit</button>
-            </p>
+            <input
+              css={inputField}
+              type="text"
+              placeholder="Last name"
+              id="lastName"
+              onChange={(e) => setLname(e.target.value)}
+            />
+            <br />
+
+            <button css={buttonStyles}>Submit</button>
           </form>
         </div>
         <div css={addGuestStyles}>
@@ -266,31 +259,31 @@ function App() {
           </table>
 
           {/* Set attending */}
-          <p>
-            {/* <label> */}
-            <button
-              css={buttonStyles}
-              type="button"
-              onClick={(e) => handleEdit(e)}
-            >
-              Confirm guest attendance
-            </button>
-            {/* </label> */}
-          </p>
+
+          {/* <label> */}
+          <button
+            css={buttonStyles}
+            type="button"
+            onClick={(e) => handleEdit(e)}
+          >
+            Confirm guest attendance
+          </button>
+          {/* </label> */}
+
+          <br />
 
           {/* Delete-Button */}
-          <p>
-            {/* <label> */}
-            <button
-              css={buttonDeleteStyles}
-              type="button"
-              onClick={(item) => handleDelete(item.id)}
-              id="delete"
-            >
-              Delete guest
-            </button>
-            {/* </label> */}
-          </p>
+
+          {/* <label> */}
+          <button
+            css={buttonDeleteStyles}
+            type="button"
+            onClick={(item) => handleDelete(item.id)}
+            id="delete"
+          >
+            Delete guest
+          </button>
+          {/* </label> */}
         </div>
       </section>
     </div>
